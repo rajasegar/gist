@@ -164,10 +164,11 @@ begin
 
   if options.key? :list
     if options[:list]
-      Gist.list_all_gists(options[:list])
+      output = Gist.list_all_gists(options[:list])
     else
-      Gist.list_all_gists
+      output = Gist.list_all_gists
     end
+    Gist.pretty_gist(output) if output
     exit
   end
 

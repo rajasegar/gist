@@ -179,7 +179,7 @@ module Gist
         request = Net::HTTP::Get.new(url)
         response = http(api_url, request)
 
-        pretty_gist(response)
+        response
 
       else
         raise Error, "Not authenticated. Use 'gist --login' to login or 'gist -l username' to view public gists."
@@ -191,7 +191,7 @@ module Gist
       request = Net::HTTP::Get.new(url)
       response = http(api_url, request)
 
-      pretty_gist(response)
+      response
     end
   end
 
@@ -267,7 +267,6 @@ module Gist
 
     request = Net::HTTP::Get.new(url)
     response = http(api_url, request)
-    pretty_gist(response)
 
     link_header = response.header['link']
 
@@ -275,6 +274,8 @@ module Gist
       links = Hash[ link_header.gsub(/(<|>|")/, "").split(',').map { |link| link.split('; rel=') } ].invert
       get_gist_pages(links['next']) if links['next']
     end
+
+    response
 
   end
 
