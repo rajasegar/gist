@@ -195,11 +195,11 @@ module Gist
     end
   end
 
-  def list_all_gists(user = "")
+  def list_all_gists(user = "", options = {})
     url = "#{base_path}"
 
     if user == ""
-      access_token = auth_token()
+      access_token = (options[:access_token] || auth_token())
       if access_token.to_s != ''
         url << "/gists?per_page=100&access_token=" << CGI.escape(access_token)
         get_gist_pages(url)
